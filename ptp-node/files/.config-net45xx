@@ -1,0 +1,13 @@
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_generic=y
+CONFIG_TARGET_x86_generic_Soekris45xx=y
+CONFIG_DEVEL=y
+CONFIG_BUILD_LOG=y
+CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
+# CONFIG_PACKAGE_firewall is not set
+# CONFIG_PACKAGE_ppp is not set
+# CONFIG_PACKAGE_ppp-mod-pppoe is not set
+# CONFIG_TARGET_ROOTFS_EXT4FS is not set
+# CONFIG_TARGET_ROOTFS_JFFS2 is not set
+# CONFIG_TARGET_ROOTFS_TARGZ is not set
+CONFIG_PACKAGE_ptp-node=y
