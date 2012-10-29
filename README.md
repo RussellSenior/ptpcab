@@ -38,7 +38,7 @@ Usage
 
 Add to your feeds.conf:
 
-	src-git ptpcab git://github.com/ptpcab.git
+	src-git ptpcab git://github.com/RussellSenior/ptpcab.git
 
 Then retrieve and install the packages:
 
