@@ -40,10 +40,14 @@ Add to your feeds.conf:
 
 	src-git ptpcab git://github.com/RussellSenior/ptpcab.git
 
+You feeds.conf must also minimally include:
+
+	src-git packages git://nbd.name/packages.git
+
 Then retrieve and install the packages:
 
-	scripts/feeds update ptpcab
-	scripts/feeds install -a -p ptpcab
+	scripts/feeds update -a 
+	scripts/feeds install -a
 
 Because the standard node disables two default packages, firewall
 and ppp, and because OpenWrt dependency resolution does not support
@@ -61,12 +65,12 @@ and the like:
 
 	CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 
-Adapt as needed.  For building on iris.personaltelco.net, a value of:
+Adapt as needed.  For building on gentoo systems, a value of:
 
 	CONFIG_DOWNLOAD_FOLDER="/usr/portage/distfiles"
 
-is preferred.  Complete the configuration using the defconfig make 
-target:
+is preferred (make sure you have permission to write there).  Complete the 
+configuration using the defconfig make target:
 
 	make defconfig
 
