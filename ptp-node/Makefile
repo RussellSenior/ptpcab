@@ -34,7 +34,7 @@ define Package/ptp-node
 	+ntpclient \
 	+olsrd \
 	+olsrd-mod-txtinfo \
-	+openvpn \
+	+openvpn-openssl \
 	+procps \
 	+radvd \
 	+rsync \
