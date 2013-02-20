@@ -25,6 +25,7 @@ define Package/dumb-ap
 	+iftop \
 	+ip \
 	+iw \
+	+iwinfo \
 	+kmod-ath5k \
 	+kmod-batman-adv \
 	+kmod-bridge \
