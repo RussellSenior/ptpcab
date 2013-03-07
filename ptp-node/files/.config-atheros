@@ -3,6 +3,7 @@ CONFIG_DEVEL=y
 CONFIG_BUILD_LOG=y
 CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 # CONFIG_PACKAGE_firewall is not set
+# CONFIG_PACKAGE_firewall3 is not set
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
 # CONFIG_TARGET_ROOTFS_JFFS2 is not set

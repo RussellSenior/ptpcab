@@ -4,6 +4,7 @@ CONFIG_DEVEL=y
 CONFIG_BUILD_LOG=y
 CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 # CONFIG_PACKAGE_firewall is not set
+# CONFIG_PACKAGE_firewall3 is not set
 # CONFIG_PACKAGE_kmod-ath5k is not set
 # CONFIG_PACKAGE_kmod-ath9k is not set
 # CONFIG_PACKAGE_kmod-cfg80211 is not set
