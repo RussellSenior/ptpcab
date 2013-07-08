@@ -10,4 +10,4 @@ CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 # CONFIG_TARGET_ROOTFS_EXT4FS is not set
 # CONFIG_TARGET_ROOTFS_JFFS2 is not set
 # CONFIG_TARGET_ROOTFS_TARGZ is not set
-CONFIG_PACKAGE_dumb-ap=y
+CONFIG_PACKAGE_dumb-ap-ath5k=y

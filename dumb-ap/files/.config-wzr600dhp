@@ -1,9 +1,11 @@
-CONFIG_TARGET_atheros=y
+CONFIG_TARGET_ar71xx=y
+CONFIG_TARGET_ar71xx_generic=y
+CONFIG_TARGET_ar71xx_generic_WZR600DHP=y
 CONFIG_DEVEL=y
 CONFIG_BUILD_LOG=y
 CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 # CONFIG_PACKAGE_firewall is not set
+# CONFIG_PACKAGE_firewall3 is not set
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
-# CONFIG_TARGET_ROOTFS_JFFS2 is not set
-CONFIG_PACKAGE_dumb-ap-ath5k=y
+CONFIG_PACKAGE_dumb-ap-ath9k=y

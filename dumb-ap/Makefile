@@ -26,7 +26,6 @@ define Package/dumb-ap
 	+ip \
 	+iw \
 	+iwinfo \
-	+kmod-ath5k \
 	+kmod-batman-adv \
 	+kmod-bridge \
 	+kmod-ipv6 \
@@ -59,10 +58,30 @@ Selecting this package will also select certain configuration options which
 are needed to use the standard PTP settings.
 endef
 
+define Package/dumb-ap-ath5k
+  SECTION:=ptp
+  CATEGORY:=PTP
+  TITLE:=Node metapackage for dumb ap devices with ath5k-supported radio
+  MAINTAINER:=Russell Senior <russell@personaltelco.net>
+  DEPENDS:= \
+	+dump-ap \
+	+kmod-ath5k
+
+define Package/dumb-ap-ath9k
+  SECTION:=ptp
+  CATEGORY:=PTP
+  TITLE:=Node metapackage for dumb ap devices with ath5k-supported radio
+  MAINTAINER:=Russell Senior <russell@personaltelco.net>
+  DEPENDS:= \
+	+dump-ap \
+	+kmod-ath9k
+
 define Build/Compile
 endef
 
 define Build/Configure
 endef
+
+
 
 $(eval $(call BuildPackage,dumb-ap))
