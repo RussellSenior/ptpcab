@@ -66,6 +66,7 @@ define Package/dumb-ap-ath5k
   DEPENDS:= \
 	+dump-ap \
 	+kmod-ath5k
+endef
 
 define Package/dumb-ap-ath9k
   SECTION:=ptp
@@ -75,6 +76,7 @@ define Package/dumb-ap-ath9k
   DEPENDS:= \
 	+dump-ap \
 	+kmod-ath9k
+endef
 
 define Build/Compile
 endef
@@ -85,3 +87,5 @@ endef
 
 
 $(eval $(call BuildPackage,dumb-ap))
+$(eval $(call BuildPackage,dumb-ap-ath5k))
+$(eval $(call BuildPackage,dumb-ap-ath9k))
