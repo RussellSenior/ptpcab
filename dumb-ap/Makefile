@@ -64,7 +64,7 @@ define Package/dumb-ap-ath5k
   TITLE:=Node metapackage for dumb ap devices with ath5k-supported radio
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \
-	+dump-ap \
+	+dumb-ap \
 	+kmod-ath5k
 endef
 
@@ -74,7 +74,7 @@ define Package/dumb-ap-ath9k
   TITLE:=Node metapackage for dumb ap devices with ath5k-supported radio
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \
-	+dump-ap \
+	+dumb-ap \
 	+kmod-ath9k
 endef
 
