@@ -31,7 +31,6 @@ define Package/ptp-node
 	+kmod-bridge \
 	+l7-protocols \
 	+nocatauth \
-	+ntpclient \
 	+olsrd \
 	+olsrd-mod-txtinfo \
 	+openvpn-openssl \

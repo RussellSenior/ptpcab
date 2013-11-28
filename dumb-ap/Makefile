@@ -29,7 +29,6 @@ define Package/dumb-ap
 	+kmod-batman-adv \
 	+kmod-bridge \
 	+kmod-ipv6 \
-	+ntpclient \
 	+procps \
 	+rsync \
 	+snmpd \
