@@ -25,6 +25,7 @@ define Package/missnet-node
 	+iftop \
 	+ip \
 	+iw \
+	+iwinfo \
 	+kmod-ath5k \
 	+kmod-batman-adv \
 	+kmod-bridge \
