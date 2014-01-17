@@ -33,7 +33,7 @@ define Package/ptp-node
 	+nocatauth \
 	+olsrd \
 	+olsrd-mod-txtinfo \
-	+openvpn-openssl \
+	+openvpn-polarssl \
 	+procps \
 	+radvd \
 	+rsync \
