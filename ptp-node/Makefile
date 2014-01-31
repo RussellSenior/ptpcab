@@ -46,6 +46,7 @@ define Package/ptp-node
 endef
 
 define Package/ptp-node/config
+	select BUSYBOX_CUSTOM
 	select BUSYBOX_CONFIG_NTPD
 	select BUSYBOX_CONFIG_MESG
 	select BUSYBOX_CONFIG_PKILL

@@ -42,6 +42,7 @@ define Package/dumb-ap
 endef
 
 define Package/dumb-ap/config
+	select BUSYBOX_CUSTOM
 	select BUSYBOX_CONFIG_NTPD
 	select BUSYBOX_CONFIG_MESG
 	select BUSYBOX_CONFIG_PKILL
