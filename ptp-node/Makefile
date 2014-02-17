@@ -35,7 +35,7 @@ define Package/ptp-node
 	+olsrd-mod-txtinfo \
 	+openvpn-openssl \
 	+procps \
-	+radvd \
+	+odhcpd \
 	+rsync \
 	+snmpd \
 	+tcpdump \
