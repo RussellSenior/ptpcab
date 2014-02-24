@@ -36,6 +36,7 @@ define Package/ptp-node
 	+openvpn-openssl \
 	+procps \
 	+odhcpd \
+	+odhcp6c \
 	+rsync \
 	+snmpd \
 	+tcpdump \
