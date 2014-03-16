@@ -41,6 +41,7 @@ define Package/ptp-node
 	+snmpd \
 	+tcpdump \
 	+traceroute6 \
+	+uhttpd \
 	+wget \
 	@!PACKAGE_ppp \
 	@!PACKAGE_firewall
@@ -52,7 +53,6 @@ define Package/ptp-node/config
 	select BUSYBOX_CONFIG_MESG
 	select BUSYBOX_CONFIG_PKILL
 	select BUSYBOX_CONFIG_RDATE
-	select BUSYBOX_CONFIG_HTTPD
 endef
 
 define Package/ptp-node/description
