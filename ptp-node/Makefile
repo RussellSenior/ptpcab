@@ -52,6 +52,7 @@ define Package/ptp-node/config
 	select BUSYBOX_CONFIG_MESG
 	select BUSYBOX_CONFIG_PKILL
 	select BUSYBOX_CONFIG_RDATE
+	select BUSYBOX_CONFIG_HTTPD
 endef
 
 define Package/ptp-node/description
