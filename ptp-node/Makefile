@@ -30,6 +30,7 @@ define Package/ptp-node
 	+iptables-mod-extra \
 	+kmod-bridge \
 	+l7-protocols \
+	+ncat \
 	+nocatauth \
 	+olsrd \
 	+olsrd-mod-txtinfo \
