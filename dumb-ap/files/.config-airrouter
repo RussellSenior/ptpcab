@@ -10,5 +10,6 @@ CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 # CONFIG_PACKAGE_kmod-lib-crc-ccitt is not set
 # CONFIG_PACKAGE_kmod-ppp is not set
 # CONFIG_PACKAGE_odhcp6c is not set
+# CONFIG_PACKAGE_odhcpd is not set
 # CONFIG_PACKAGE_ppp is not set
 CONFIG_PACKAGE_dumb-ap-ath9k=y
