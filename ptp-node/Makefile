@@ -38,6 +38,7 @@ define Package/ptp-node
 	+procps \
 	+odhcpd \
 	+odhcp6c \
+	+ptp-utils \
 	+rsync \
 	+snmpd \
 	+tcpdump \
