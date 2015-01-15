@@ -31,13 +31,13 @@ define Package/ptp-node
 	+kmod-bridge \
 	+l7-protocols \
 	+ncat \
-	+nocatauth \
+	+odhcpd \
+	+odhcp6c \
 	+olsrd \
 	+olsrd-mod-txtinfo \
 	+openvpn-openssl \
 	+procps \
-	+odhcpd \
-	+odhcp6c \
+	+ptp-nocatauth \
 	+ptp-utils \
 	+rsync \
 	+snmpd \

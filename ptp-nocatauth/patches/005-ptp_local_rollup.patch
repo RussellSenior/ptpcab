@@ -1,0 +1,386 @@
+--- a/libexec/iptables/access.fw	2015-01-15 11:19:56.000000000 +0000
++++ b/libexec/iptables/access.fw	2014-04-30 08:21:04.000000000 +0000
+@@ -21,6 +21,8 @@
+ if [ "$action" = "permit" ]; then
+     cmd=-A
+ elif [ "$action" = "deny" ]; then
++    logger tried deny $mac
++    [ -f /usr/bin/client-status.sh ] && /usr/bin/client-status.sh -e $mac
+     cmd=-D
+ else
+     echo "FATAL: Bad action: $action!"
+--- a/libexec/iptables/initialize.fw	2015-01-15 11:19:56.000000000 +0000
++++ b/libexec/iptables/initialize.fw	2014-04-30 08:21:04.000000000 +0000
+@@ -94,7 +94,7 @@
+ 	#
+ 	if [ "$AuthServiceAddr" -o "$AllowedWebHosts" ]; then 
+ 	    for host in $AuthServiceAddr $AllowedWebHosts; do
+-		for port in 80 443; do
++		for port in 80; do
+ 		    $nat      -s $net -d $host -p tcp --dport $port -j MASQUERADE
+     		    $redirect -s $net -d $host -p tcp --dport $port -j RETURN
+ 		    $fwd -s $net -d $host -p tcp --dport $port -j ACCEPT
+@@ -141,9 +141,8 @@
+ else
+     nonauth="4"
+ fi
+-for port in 80 443; do
++for port in 80; do
+     for mark in $nonauth; do
+-	$redirect -m mark --mark $mark -d windowsupdate.microsoft.com -j DROP
+ 	$redirect -m mark --mark $mark -p tcp --dport $port  -j REDIRECT \
+ 	    --to-port $GatewayPort
+     done
+@@ -206,7 +205,7 @@
+ fi
+ 
+ # Filter policy.
+-$fwd -j DROP
++#$fwd -j DROP
+ 
+ #
+ # Call the bandwidth throttle rules.
+@@ -242,6 +241,13 @@
+ #  iptables -t filter -A FORWARD -s $net -j ACCEPT
+ #done      
+ 
++AllowedNetworks="74.85.245.161/32"
++
++for net in $AllowedNetworks; do
++  iptables -t mangle -A PREROUTING -d $net -j MARK --set-mark 2
++  iptables -t filter -A FORWARD -s $net -j ACCEPT
++done      
++
+ #
+ # Ende
+ #
+--- a/lib/NoCat/Gateway.pm	2015-01-15 11:19:56.000000000 +0000
++++ b/lib/NoCat/Gateway.pm	2014-04-30 08:21:04.000000000 +0000
+@@ -165,7 +165,7 @@
+ 		$self->accept_client( $client );
+ 		
+ 		# Exit iff we actually succeeded in forking.
+-		exit 0 if defined $is_parent;
++		return 0 if defined $is_parent; 
+ 	    }
+ 	} else {
+ 	    # Otherwise, this is a child reporting back via a pipe.
+@@ -290,7 +290,7 @@
+     my $self = shift;
+     while ( my ($token, $peer) = each %{$self->{Peer}} ) {
+ 	if ( $peer->expired ) {
+-	    $self->log( 8, "Expiring connection from ", $peer->ip, "." );
++	    $self->log( 8, "Expiring connection from", $peer->ip, $peer->mac, "." );
+ 	    $self->deny( $peer );
+ 	}
+     }
+@@ -308,14 +308,15 @@
+ 
+     # Only fetch the table once to save some ticks
+     my $arp = $self->firewall->arp_table( $self->firewall->BY_MAC );
+-
++    $self->log( 8, "DEBUG arp: ", $arp, "." );
++    
+     while ( my ($token, $peer) = each %{$self->{Peer}} ) {
+         if ( defined $arp->{$peer->mac} ) {
+             $peer->{MissedARP} = 0;
+         } else {
+ 	    # How many missed ARPs should it take?
+ 	    if ( ++$peer->{MissedARP} >= $self->{MaxMissedARP} ) { 
+-	        $self->log( 8, "Expiring inactive connection from ", $peer->ip, "." );
++	        $self->log( 8, "Expiring inactive connection from", $peer->ip, "." );
+ 	        $self->deny( $peer );
+             }
+ 	}
+@@ -336,15 +337,18 @@
+ 
+     # Read the HTTP header fields.
+     while (defined( $line = <$socket> )) {
+-	$line =~ s/^\s+|\s+$//gos;
++	$line =~ s/^\s+|\s+$|User-//gos;
+ 	last unless length $line;
++	#my ( $key, $val ) = split /:\s+/, $line, 2;
+ 	my ( $key, $val ) = split /:\s+/, $line, 2;
+-	$head{ ucfirst lc $key } = $val;
++        #$val =~ split /User-/, $val;
++        $head{ ucfirst lc $key } = $val;
+     }
+ 
+-    $head{Method}   = $method || "GET";
+-    $head{URI}	    = $uri || "/";
+-    $head{URL}	    = ($head{Host} ? "http://$head{Host}$head{URI}" : $self->{HomePage}) || "";
++    $head{Method}     = $method || "GET";
++    $head{URI}	      = $uri || "/";
++    $head{URL}	      = ($head{Host} ? "http://$head{Host}$head{URI}" : $self->{HomePage}) || "";
++    #$head{UserAgent}  = ($head{UserAgent}) || "null";
+ 
+     return \%head;
+ }
+@@ -398,13 +402,13 @@
+ 	    $fw->deny( $prior_class, $peer->mac, $peer->ip );
+ 	    $action = "Upgrade";
+ 	} else {
+-	    $self->log( 5, "User ", $peer->user, " permitted in class $class" );
++	    $self->log( 5, "User", ( $peer->user || $peer->ip ), $peer->mac, "permitted in class $class" );
+ 	    $action = PERMIT;
+ 	}
+ 
+ 	$peer->status( $class );
+     } else {
+-	$self->log( 5, "User ", $peer->user, " renewed in class $class" );
++	$self->log( 5, "User", $peer->user, " renewed in class $class" );
+ 	$action = "Renew";
+     }
+ 
+@@ -428,8 +432,8 @@
+     return $self->log( 7, "Denying peer $mac without prior permit." )
+ 	if not $class or $class eq DENY;
+ 
+-    $self->log( 5, "User ", ( $peer->user || $peer->ip ),
+-	" denied service. Connected since " ,
++    $self->log( 5, "User", ( $peer->user || $peer->ip ),
++	$peer->mac, "denied service. Connected since" ,
+ 	scalar localtime $peer->connect_time, "." ); 
+ 
+     my $fw = $self->firewall( GatewayAddr => $peer->gateway_ip );
+--- a/lib/NoCat/Gateway/Open.pm	2015-01-15 11:19:56.000000000 +0000
++++ b/lib/NoCat/Gateway/Open.pm	2014-04-30 08:21:04.000000000 +0000
+@@ -1,11 +1,12 @@
+ package NoCat::Gateway::Open;
+ 
+ use NoCat::Gateway qw( PERMIT DENY PUBLIC );
++use NoCat::BrowserDetect;
+ use vars qw( @ISA @REQUIRED );
+ use strict;
+ 
+ @ISA	    = 'NoCat::Gateway';
+-@REQUIRED   = ( @NoCat::Gateway::REQUIRED, qw( SplashForm ));
++@REQUIRED   = ( @NoCat::Gateway::REQUIRED, qw( SplashForm MobileForm ));
+ 
+ my %MIME = (
+     jpg	    => "image/jpeg",
+@@ -16,7 +17,13 @@
+     html    => "text/html",
+     htm	    => "text/html",
+     txt	    => "text/plain",
+-    css	    => "text/css"
++    css	    => "text/css",
++    js	    => "text/javascript",
++    woff    => "application/font-woff",
++    eot     => "application/vnd.ms-fontobject",
++    ttf	    => "font/ttf",
++    svg     => "image/svg+xml"
++
+ );
+ 
+ sub handle {
+@@ -26,7 +33,7 @@
+     if ( my $host = $request->{Host} ) {
+ 	my $me = $peer->gateway_ip;
+ 
+-        $self->log( 7, "Peer ", $peer->socket->peerhost, " requests $host" );
++        $self->log( 7, "Peer", $peer->socket->peerhost, "requests $host" );
+ 
+         # $self->log( 9, "HTTP headers: @{[ %$request ]}" );
+ 
+@@ -77,7 +84,7 @@
+ sub serve {
+     my ( $self, $peer, $request ) = @_;
+ 
+-    my $file = "$self->{DocumentRoot}/$request->{URI}";
++    my $file = "$self->{DocumentRoot}$request->{URI}";
+     $file =~ s/\.+/./gos; # Prevent ../ type whatnot.
+ 
+     my ($ext) = ( $file =~ /([^\.\/]+)$/gos ); # Try to get the file extension?
+@@ -128,7 +135,11 @@
+ sub capture {
+     my ( $self, $peer, $request ) = @_;
+     my $host	= $peer->gateway_ip;
+-    my $url	= $self->url_encode( $request->{URL} );
++    my $bare   = $request->{URL};
++    if ($bare =~ /generate_204/) {
++       $bare = "https://personaltelco.net/";
++    }
++    my $url    = $self->url_encode( $bare );
+ 
+     $self->log( 8, "Capturing peer", $peer->ip );
+     $self->redirect( $peer => "http://$host/?redirect=$url" );
+@@ -136,9 +147,17 @@
+ 
+ sub splash {
+     my ( $self, $peer, $request ) = @_;
++    my $browser = new NoCat::BrowserDetect($request->{Agent});
+     
+-    $self->log( 8, "Displaying splash page to peer", $peer->ip );
+-    $self->respond( $peer, SplashForm => $self->splash_vars($peer, $request) )
++    if ($browser->mobile) {
++	$self->log( 5, "Client: " . $peer->ip . " " . $peer->mac . " $request->{Agent}");
++	$self->log( 5, "Displaying mobile splash page to peer", $peer->ip );
++        $self->respond( $peer, MobileForm => $self->splash_vars($peer, $request) )
++    } else {
++	$self->log( 5, "Client: " . $peer->ip . " " . $peer->mac . " $request->{Agent}");
++	$self->log( 5, "Displaying splash page to peer", $peer->ip );
++	$self->respond( $peer, SplashForm => $self->splash_vars($peer, $request) )
++    }
+ }
+ 
+ sub splash_vars {
+@@ -164,7 +183,7 @@
+ 	if $line =~ /(?:^|&)redirect=([^&]+)/o;
+     
+     if ( $url ) {
+-	$self->log( 5, "Opening portal for " . $peer->ip . " to $url" );
++	$self->log( 5, "Opening portal for " . $peer->ip . " " . $peer->mac . " to $url" );
+ 	$self->permit( $peer => PUBLIC );
+ 	$self->redirect( $peer => $url ); 
+     } else {
+--- a/lib/NoCat/Firewall.pm	2015-01-15 11:19:56.000000000 +0000
++++ b/lib/NoCat/Firewall.pm	2014-04-30 08:21:04.000000000 +0000
+@@ -25,7 +25,8 @@
+ # its output to get ARP cache data. Turns out '/sbin/arp -an' gives the same
+ # output on both Linux and *BSD. (Thank goodness.)
+ #
+-my $Arp_Cache = ( -r "/proc/net/arp" ? "/proc/net/arp" : "arp -an|" );
++#my $Arp_Cache = ( -r "/proc/net/arp" ? "/proc/net/arp" : "arp -an|" );
++my $Arp_Cache = ( "ip n|" );
+ my $Ifconfig  = "ifconfig -a";
+ my $Netstat   = "netstat -rn";
+ 
+@@ -123,9 +124,9 @@
+     open( ARP, $Arp_Cache ) or die "Can't open arp table $Arp_Cache: $!";
+ 
+     while ( <ARP> ) {
+-	next unless /^\?\s+\($IP_Match\)\s+at\s+$MAC_Match/io	 # Match /sbin/arp -an
+-	    or /^$IP_Match\s+(?:[0-9a-fx]+\s+){2}$MAC_Match/io;  # or match /proc/net/arp
+-
++	next unless 
++	    /^$IP_Match\s.*\s.*\s.*\s$MAC_Match\s(REACHABLE|DELAY|STALE)/io;
++	
+ 	if ( $mode eq BY_IP ) {
+ 	    $table{$1} = $2
+ 	} else { # BY_MAC
+@@ -134,7 +135,6 @@
+     }
+ 
+     close(ARP);
+-
+     return \%table;
+ }
+ 
+--- a/lib/NoCat/BrowserDetect.pm	1970-01-01 00:00:00.000000000 +0000
++++ b/lib/NoCat/BrowserDetect.pm	2014-04-30 08:21:04.000000000 +0000
+@@ -0,0 +1,114 @@
++use strict;
++package NoCat::BrowserDetect;
++BEGIN {
++  $NoCat::BrowserDetect::VERSION = '1.12';
++}
++
++use vars qw(@ISA @EXPORT @EXPORT_OK @ALL_TESTS);
++require Exporter;
++
++@ISA       = qw(Exporter);
++@EXPORT    = qw();
++@EXPORT_OK = qw();
++
++# Properties
++push @ALL_TESTS, 'mobile';
++
++#######################################################################################################
++# BROWSER OBJECT
++
++my $default = undef;
++
++sub new {
++    my ( $class, $user_agent ) = @_;
++
++    my $self = {};
++    bless $self, $class;
++
++    unless ( defined $user_agent ) {
++        $user_agent = $ENV{'HTTP_USER_AGENT'};
++    }
++
++    $self->user_agent( $user_agent );
++    return $self;
++}
++
++foreach my $test ( @ALL_TESTS ) {
++    no strict 'refs';
++    my $key = uc $test;
++    *{$test} = sub {
++        my ( $self ) = _self_or_default( @_ );
++        return $self->{tests}->{$key};
++    };
++}
++
++sub _self_or_default {
++    my ( $self ) = $_[0];
++    return @_
++        if ( defined $self
++        && ref $self
++        && ( ref $self eq 'NoCat::BrowserDetect' )
++        || UNIVERSAL::isa( $self, 'NoCat::BrowserDetect' ) );
++    $default ||= NoCat::BrowserDetect->new();
++    unshift( @_, $default );
++    return @_;
++}
++
++sub user_agent {
++    my ( $self, $user_agent ) = _self_or_default( @_ );
++    if ( defined $user_agent ) {
++        $self->{user_agent} = $user_agent;
++        $self->_test();
++    }
++    return $self->{user_agent};
++}
++
++# Private method -- test the UA string
++sub _test {
++    my ( $self ) = @_;
++
++    $self->{tests} = {};
++    my $tests = $self->{tests};
++
++    my $ua = lc $self->{user_agent};
++
++    # Devices
++    $tests->{MOBILE} = (
++               index( $ua, "up.browser" ) != -1
++            || index( $ua, "kindle" ) != -1
++	    || index( $ua, "nokia" ) != -1
++            || index( $ua, "alcatel" ) != -1
++            || index( $ua, "ericsson" ) != -1
++            || index( $ua, "sie-" ) == 0
++            || index( $ua, "wmlib" ) != -1
++            || index( $ua, " wap" ) != -1
++            || index( $ua, "wap " ) != -1
++            || index( $ua, "wap/" ) != -1
++            || index( $ua, "-wap" ) != -1
++            || index( $ua, "wap-" ) != -1
++            || index( $ua, "wap" ) == 0
++            || index( $ua, "wapper" ) != -1
++            || index( $ua, "blackberry" ) != -1
++            || index( $ua, "iemobile" ) != -1
++            || index( $ua, "palm" ) != -1
++            || index( $ua, "smartphone" ) != -1
++            || index( $ua, "windows ce" ) != -1
++            || index( $ua, "palmsource" ) != -1
++            || index( $ua, "iphone" ) != -1
++            || index( $ua, "ipod" ) != -1
++            || index( $ua, "ipad" ) != -1
++            || index( $ua, "opera mini" ) != -1
++            || index( $ua, "android" ) != -1
++            || index( $ua, "htc_" ) != -1
++            || index( $ua, "symbian" ) != -1
++            || index( $ua, "webos" ) != -1
++            || index( $ua, "samsung" ) != -1
++            || index( $ua, "samsung" ) != -1
++            || index( $ua, "zetor" ) != -1
++            || index( $ua, "android" ) != -1
++            || index( $ua, "symbos" ) != -1
++            || index( $ua, "opera mobi" ) != -1
++    );
++
++};
++1;
