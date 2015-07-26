@@ -16,7 +16,6 @@ define Package/ptp-node
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \
-	+bridge \
 	+curl \
 	+diffutils \
 	+dnsmasq \
