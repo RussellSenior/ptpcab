@@ -242,7 +242,7 @@
  #
 -my $Arp_Cache = ( -r "/proc/net/arp" ? "/proc/net/arp" : "arp -an|" );
 +#my $Arp_Cache = ( -r "/proc/net/arp" ? "/proc/net/arp" : "arp -an|" );
-+my $Arp_Cache = ( "ip n|" );
++my $Arp_Cache = ( "/usr/bin/ip n|" );
  my $Ifconfig  = "ifconfig -a";
  my $Netstat   = "netstat -rn";
  
