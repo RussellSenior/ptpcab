@@ -59,13 +59,10 @@ starting config to .config:
 
 	cp feeds/ptpcab/ptp-node/files/.config-alix2 .config
 
-These sample configs using a particular value of CONFIG_DOWNLOAD_FOLDER, 
-the location that OpenWrt buildroot uses to store downloaded source tarballs
-and the like:
-
-	CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
-
-Adapt as needed.  For building on gentoo systems, a value of:
+The OpenWrt buildroot uses the CONFIG_DOWNLOAD_FOLDER variable to
+store downloaded source tarballs.  If you have an existing archive of 
+downloaded tarballs, adapt as needed.  For example, building on gentoo 
+systems, a value of:
 
 	CONFIG_DOWNLOAD_FOLDER="/usr/portage/distfiles"
 

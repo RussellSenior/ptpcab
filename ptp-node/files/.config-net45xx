@@ -3,7 +3,6 @@ CONFIG_TARGET_x86_generic=y
 CONFIG_TARGET_x86_generic_Soekris45xx=y
 CONFIG_DEVEL=y
 CONFIG_BUILD_LOG=y
-CONFIG_DOWNLOAD_FOLDER="/src_archive/openwrt/dl"
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_firewall is not set
 # CONFIG_PACKAGE_firewall3 is not set
