@@ -29,7 +29,7 @@ define Package/dumb-ap
 	+kmod-batman-adv \
 	+kmod-bridge \
 	+kmod-ipv6 \
-	+procps \
+	+procps-ng \
 	+rsync \
 	+snmpd \
 	+tcpdump \

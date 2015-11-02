@@ -35,7 +35,7 @@ define Package/ptp-node
 	+olsrd \
 	+olsrd-mod-txtinfo \
 	+openvpn-openssl \
-	+procps \
+	+procps-ng \
 	+ptp-nocatauth \
 	+ptp-utils \
 	+rsync \
