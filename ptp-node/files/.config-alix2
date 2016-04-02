@@ -5,7 +5,6 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_firewall is not set
 # CONFIG_PACKAGE_firewall3 is not set
-# CONFIG_PACKAGE_kmod-ath5k is not set
 # CONFIG_PACKAGE_kmod-ath9k is not set
 # CONFIG_PACKAGE_kmod-cfg80211 is not set
 # CONFIG_PACKAGE_kmod-mac80211 is not set
@@ -15,4 +14,5 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
 # CONFIG_PACKAGE_wpad is not set
-CONFIG_PACKAGE_ptp-node=y
+CONFIG_PACKAGE_ptp-node-with-ath5k=y
+CONFIG_PACKAGE_partx-utils=y
