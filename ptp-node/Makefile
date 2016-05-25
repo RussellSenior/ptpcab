@@ -28,7 +28,6 @@ define Package/ptp-node
 	+iptables-mod-conntrack-extra \
 	+iptables-mod-extra \
 	+kmod-bridge \
-	+l7-protocols \
 	+ncat \
 	+odhcpd \
 	+odhcp6c \
