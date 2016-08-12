@@ -42,9 +42,7 @@ define Package/ptp-node
 	+tcpdump \
 	+traceroute6 \
 	+uhttpd \
-	+wget \
-	@!PACKAGE_ppp \
-	@!PACKAGE_firewall
+	+wget
 endef
 
 define Package/ptp-node/config

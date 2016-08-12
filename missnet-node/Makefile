@@ -36,9 +36,7 @@ define Package/missnet-node
 	+traceroute6 \
 	+wget \
 	+wireless-tools \
-	+wpad-mini \
-	@!PACKAGE_ppp \
-	@!PACKAGE_firewall
+	+wpad-mini
 endef
 
 define Package/missnet-node/config
