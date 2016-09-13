@@ -1,33 +1,80 @@
 #!/bin/sh
 mac=$2
-phy=phy0
-iface="wlan*"
-noise=$(iw wlan0 survey dump | awk '$1 ~ /noise/ { print $2 }')
+# clear client database
+rm -rf /tmp/clients-last
+mv /tmp/clients /tmp/clients-last
+
+# remember starting directory
+wd=$(pwd)
+
+# construct client database from radio information
+find /sys/kernel/debug/ieee80211/ -type d | grep stations | awk -F/ 'NF == 9 { split($7,a,":") ; print $6,a[2],$9 }' | while read phy wif bssid ; do
+	mkdir -p /tmp/clients/$bssid
+	cd /tmp/clients/$bssid
+	echo $wif > wif
+	echo $phy > phy
+	iwinfo $(cat wif) assoc | grep -A2 -i "$bssid" | tr -d '(),' | awk '
+		NR == 1 { print $2 > "rssi" ; print $5 > "noise" ; print $8 > "snr" ; print $9 > "last_rx" }
+		NR == 2 && $4 ~ /MCS/ { print $2 > "rx_rate"; print $5 > "rx_mcs" ; print $6 > "rx_chanwidth" ; print $7 > "rx_packets" }
+		NR == 2 && NF == 5 { print $2 > "rx_rate" ; print $4 > "rx_packets" }
+		NR == 3 && $4 ~ /MCS/ { print $2 > "tx_rate"; print $5 > "tx_mcs" ; print $6 > "tx_chanwidth" ; print $7 > "tx_packets" }
+		NR == 3 && NF == 5 { print $2 > "tx_rate" ; print $4 > "tx_packets" }'
+	cd $wd
+done
+
+# construct client database from dhcp lease information
+cat /tmp/dhcp.leases | while read lease_time mac ipv4 hostname mumble ; do
+	if [ ! -d /tmp/clients/$mac ] ; then
+		mkdir -p /tmp/clients/$mac
+	fi
+	cd /tmp/clients/$mac
+	echo "$lease_time" > lease_time
+	echo "$ipv4" > ipv4
+	echo "$hostname" > hostname
+	ln -s /tmp/clients/$mac /tmp/clients/$ipv4
+done
+
+# construct client database from iptables mangle table information
+/usr/sbin/iptables -t mangle -nvxL NoCat | grep MAC | while read packets_out bytes_out table j0 j1 j2 j3 ipv4 j4 j5 mac j6 j7 mark ; do
+	mac=$(echo $mac | tr 'A-F' 'a-f')
+	if [ ! -d /tmp/clients/$mac ] ; then
+                mkdir -p /tmp/clients/$mac
+        fi
+	cd /tmp/clients/$mac
+	echo "$packets_out" > packets_out
+	echo "$bytes_out" > bytes_out
+	echo "$ipv4" > ipv4_mangle
+	echo "$mark" > mark
+	if [ ! -e /tmp/clients/$ipv4 ] ; then
+		ln -s /tmp/clients/$mac /tmp/clients/$ipv4
+	fi
+done
+
+# construct client database from iptables filter table information
+/usr/sbin/iptables -nvxL NoCat_Inbound | grep ACCEPT | while read packets_in bytes_in j0 j1 j2 j3 j4 j5 ipv4 ; do
+	cd /tmp/clients/$ipv4
+	echo "$packets_in" > packets_in
+	echo "$bytes_in" > bytes_in
+done
+
+cd $wd
 
 # print rows of (macaddr,ipaddr,bytes)
 ncusers()
 {
-iptables -t mangle -nxvL NoCat | grep MAC | awk '{print $11,$8,$2}'
+for i in $(find /tmp/clients -name ipv4_mangle) ; do echo $(echo $i | cut -d/ -f4) $(cat $i) $(cat ${i%%ipv4_mangle}bytes_out) ; done
 }
 
 # prints number of clients auth'd
 usercount()
 {
-ncusers | wc -l
+find /tmp/clients -name ipv4_mangle | wc -l
 }
 
 # prints rows of people connected (macaddr,ipaddr,bytes,rssi)
 cmb() 
 {
-ncusers | while read i; do
-macaddr=$(echo $i | cut -d' ' -f1 | tr 'A-Z' 'a-z')
-if [ -d /sys/kernel/debug/ieee80211/${phy}/netdev\:${iface}/stations/${macaddr} ]; then
-echo $i $(expr $(cat /sys/kernel/debug/ieee80211/${phy}/netdev\:${iface}/stations/${macaddr}/last_signal) - $noise)
-else
-echo $i
-fi
-done
-for i in /sys/kernel/debug/ieee80211/${phy}/netdev\:${iface}/stations/* ; do if [ -f $i/last_signal ]; then echo $(basename $i | tr 'a-f' 'A-F') 0 0 $(expr $(cat $i/last_signal) - $noise) ; fi ; done 
+for i in $(find /tmp/clients -name ipv4_mangle) ; do echo $(echo $i | cut -d/ -f4) $(cat $i) $(cat ${i%%ipv4_mangle}bytes_out) $(cat ${i%%ipv4_mangle}rssi) ; done
 }
 
 sta2()
