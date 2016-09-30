@@ -40,7 +40,6 @@ define Package/ptp-node
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+traceroute6 \
 	+uhttpd \
 	+wget
 endef
@@ -49,7 +48,6 @@ define Package/ptp-node/config
 	select BUSYBOX_CUSTOM
 	select BUSYBOX_CONFIG_NTPD
 	select BUSYBOX_CONFIG_MESG
-	select BUSYBOX_CONFIG_PKILL
 	select BUSYBOX_CONFIG_RDATE
 endef
 
@@ -68,7 +66,6 @@ define Package/ptp-node-with-ath5k
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= +ptp-node \
-	+crda \
 	+horst \
 	+iw \
 	+iwinfo \
@@ -88,7 +85,6 @@ define Package/ptp-node-with-ath9k
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= +ptp-node \
-	+crda \
 	+horst \
 	+iw \
 	+iwinfo \

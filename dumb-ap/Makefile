@@ -17,7 +17,6 @@ define Package/dumb-ap
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \
 	+bridge \
-	+crda \
 	+curl \
 	+diffutils \
 	+dropbear \
@@ -33,7 +32,6 @@ define Package/dumb-ap
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+traceroute6 \
 	+wget \
 	+wireless-tools \
 	+wpad-mini
@@ -43,7 +41,6 @@ define Package/dumb-ap/config
 	select BUSYBOX_CUSTOM
 	select BUSYBOX_CONFIG_NTPD
 	select BUSYBOX_CONFIG_MESG
-	select BUSYBOX_CONFIG_PKILL
 	select BUSYBOX_CONFIG_RDATE
 endef
 
