@@ -28,7 +28,7 @@ define Package/missnet-node
 	+kmod-ath5k \
 	+kmod-batman-adv \
 	+kmod-bridge \
-	+procps \
+	+procps-ng \
 	+rsync \
 	+snmpd \
 	+tcpdump \
