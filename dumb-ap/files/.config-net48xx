@@ -1,8 +1,9 @@
 CONFIG_TARGET_x86=y
-CONFIG_TARGET_x86_generic=y
-CONFIG_TARGET_x86_generic_Soekris48xx=y
+CONFIG_TARGET_x86_legacy=y
+CONFIG_TARGET_x86_legacy_Generic=y
 CONFIG_DEVEL=y
 CONFIG_BUILD_LOG=y
+CONFIG_GRUB_BAUDRATE=19200
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_dnsmasq is not set
 # CONFIG_PACKAGE_firewall is not set

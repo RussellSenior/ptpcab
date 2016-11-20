@@ -21,7 +21,7 @@ define Package/ptp-node
 	+dnsmasq \
 	+dropbear \
 	+iftop \
-	+ip \
+	+ip-tiny \
 	+ip6tables \
 	+iptables-mod-filter \
 	+iptables-mod-condition \
