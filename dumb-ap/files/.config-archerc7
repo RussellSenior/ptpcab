@@ -3,6 +3,10 @@ CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_ARCHERC7=y
 CONFIG_DEVEL=y
 CONFIG_BUILD_LOG=y
+# CONFIG_BUSYBOX_CONFIG_FREE is not set
+# CONFIG_BUSYBOX_CONFIG_PGREP is not set
+# CONFIG_BUSYBOX_CONFIG_TOP is not set
+# CONFIG_BUSYBOX_CONFIG_UPTIME is not set
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_dnsmasq is not set
 # CONFIG_PACKAGE_firewall is not set
