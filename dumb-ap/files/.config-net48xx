@@ -9,6 +9,7 @@ CONFIG_BUILD_LOG=y
 # CONFIG_BUSYBOX_CONFIG_TOP is not set
 # CONFIG_BUSYBOX_CONFIG_UPTIME is not set
 CONFIG_GRUB_BAUDRATE=19200
+# CONFIG_GRUB_CONSOLE is not set
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_dnsmasq is not set
 # CONFIG_PACKAGE_firewall is not set
