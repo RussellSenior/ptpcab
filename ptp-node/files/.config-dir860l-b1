@@ -12,6 +12,7 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_firewall is not set
 # CONFIG_PACKAGE_firewall3 is not set
 CONFIG_PACKAGE_horst=y
+CONFIG_PACKAGE_iwinfo=y
 # CONFIG_PACKAGE_odhcp6c is not set
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
