@@ -1,0 +1,11 @@
+--- a/lib/NoCat/Firewall.pm
++++ b/lib/NoCat/Firewall.pm
+@@ -26,7 +26,7 @@ my @Perform_Export = qw(
+ # output on both Linux and *BSD. (Thank goodness.)
+ #
+ #my $Arp_Cache = ( -r "/proc/net/arp" ? "/proc/net/arp" : "arp -an|" );
+-my $Arp_Cache = ( "/usr/bin/ip n|" );
++my $Arp_Cache = ( "/sbin/ip n|" );
+ my $Ifconfig  = "ifconfig -a";
+ my $Netstat   = "netstat -rn";
+ 
