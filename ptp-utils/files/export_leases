@@ -12,7 +12,7 @@ export_host() {
         config_get _ip "$section" ip
         config_get _name "$section" name
 
-        echo add host
+        echo add dhcp host
         [ -n "$_mac" ] && echo set dhcp.@host[-1].mac=$_mac
         [ -n "$_ip" ] && echo set dhcp.@host[-1].ip=$_ip
         [ -n "$_name" ] && echo set dhcp.@host[-1].name=\"$_name\"
