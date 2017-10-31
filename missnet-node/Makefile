@@ -32,7 +32,6 @@ define Package/missnet-node
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+wget \
 	+wireless-tools \
 	+wpad-mini
 endef

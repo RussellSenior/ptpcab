@@ -32,7 +32,6 @@ define Package/dumb-ap
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+wget \
 	+wireless-tools \
 	+wpad-mini
 endef

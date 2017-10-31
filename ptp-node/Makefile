@@ -34,15 +34,14 @@ define Package/ptp-node
 	+odhcp6c \
 	+olsrd \
 	+olsrd-mod-txtinfo \
-	+openvpn-openssl \
+	+openvpn-mbedtls \
 	+procps-ng \
 	+ptp-nocatauth \
 	+ptp-utils \
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+uhttpd \
-	+wget
+	+uhttpd
 endef
 
 define Package/ptp-node/config
