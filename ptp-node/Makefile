@@ -30,7 +30,7 @@ define Package/ptp-node
 	+iptables-mod-extra \
 	+kmod-bridge \
 	+ncat \
-	+odhcpd \
+	+odhcpd-ipv6only \
 	+odhcp6c \
 	+olsrd \
 	+olsrd-mod-txtinfo \
