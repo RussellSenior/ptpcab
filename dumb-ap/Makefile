@@ -26,8 +26,6 @@ define Package/dumb-ap
 	+iw \
 	+iwinfo \
 	+kmod-batman-adv \
-	+kmod-bridge \
-	+kmod-ipv6 \
 	+procps-ng \
 	+rsync \
 	+snmpd \
