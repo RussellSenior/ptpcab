@@ -30,8 +30,7 @@ define Package/dumb-ap
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+wireless-tools \
-	+wpad-mini
+	+wpad-basic
 endef
 
 define Package/dumb-ap/config

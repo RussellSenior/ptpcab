@@ -16,6 +16,5 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_odhcpd is not set
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
-# CONFIG_PACKAGE_wpad-basic is not set
 CONFIG_PACKAGE_dumb-ap=y
 CONFIG_PACKAGE_iwinfo=y

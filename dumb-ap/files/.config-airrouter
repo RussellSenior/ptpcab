@@ -15,5 +15,4 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_odhcp6c is not set
 # CONFIG_PACKAGE_odhcpd is not set
 # CONFIG_PACKAGE_ppp is not set
-# CONFIG_PACKAGE_wpad-basic is not set
 CONFIG_PACKAGE_dumb-ap-ath9k=y

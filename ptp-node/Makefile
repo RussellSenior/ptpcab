@@ -69,8 +69,7 @@ define Package/ptp-node-with-ath5k
 	+iw \
 	+iwinfo \
 	+kmod-ath5k \
-	+wireless-tools \
-	+wpad-mini
+	+wpad-basic
 endef
 
 define Package/ptp-node-with-ath5k/description
@@ -88,8 +87,7 @@ define Package/ptp-node-with-ath9k
 	+iw \
 	+iwinfo \
 	+kmod-ath9k \
-	+wireless-tools \
-	+wpad-mini
+	+wpad-basic
 endef
 
 define Package/ptp-node-with-ath9k/description
