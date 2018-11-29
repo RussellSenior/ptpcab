@@ -16,4 +16,5 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_odhcp6c is not set
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
+CONFIG_PACKAGE_ptp-nocatauth=y
 CONFIG_PACKAGE_ptp-node-with-ath5k=y

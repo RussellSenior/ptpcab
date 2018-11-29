@@ -17,5 +17,6 @@ CONFIG_BUILD_LOG=y
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
 # CONFIG_PACKAGE_wpad is not set
+CONFIG_PACKAGE_ptp-nocatauth=y
 CONFIG_PACKAGE_ptp-node-with-ath9k=y
 CONFIG_PACKAGE_partx-utils=y
