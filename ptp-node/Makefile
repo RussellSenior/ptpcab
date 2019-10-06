@@ -35,6 +35,22 @@ define Package/ptp-node
 	+olsrd-mod-txtinfo \
 	+openvpn-mbedtls \
 	+procps-ng \
+	+procps-ng-free \
+	+procps-ng-kill \
+	+procps-ng-pgrep \
+	+procps-ng-pkill \
+	+procps-ng-pmap \
+	+procps-ng-ps \
+	+procps-ng-pwdx \
+	+procps-ng-skill \
+	+procps-ng-slabtop \
+	+procps-ng-snice \
+	+procps-ng-tload \
+	+procps-ng-top \
+	+procps-ng-uptime \
+	+procps-ng-vmstat \
+	+procps-ng-w \
+	+procps-ng-watch \
 	+ptp-utils \
 	+rsync \
 	+snmpd \
