@@ -1,4 +1,4 @@
-# ptp-node/Makefile: OpenWrt metapackage for PTP nodes
+# ptp-node/Makefile: OpenWrt metapackage for PTP node devices
 # Copyright 2012 Personal Telco Project
 
 include $(TOPDIR)/rules.mk
@@ -12,7 +12,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/ptp-node
   SECTION:=ptp
   CATEGORY:=PTP
-  TITLE:=Node metapackage for Personal Telco devices
+  TITLE:=Metapackage for Personal Telco node devices
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \

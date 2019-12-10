@@ -1,4 +1,4 @@
-# missnet-node/Makefile: OpenWrt metapackage for PTP nodes
+# missnet-node/Makefile: OpenWrt metapackage for Metrix boxes on the Mississippi Network
 # Copyright 2013 Personal Telco Project
 
 include $(TOPDIR)/rules.mk
@@ -12,7 +12,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/missnet-node
   SECTION:=ptp
   CATEGORY:=PTP
-  TITLE:=Node metapackage for Personal Telco Mississippi Community Network devices
+  TITLE:=Metapackage for Personal Telco Mississippi Community Network devices
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \

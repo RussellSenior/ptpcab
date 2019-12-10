@@ -1,4 +1,4 @@
-# missnet-node/Makefile: OpenWrt metapackage for PTP nodes
+# dumb-ap/Makefile: OpenWrt metapackage for dumb-ap devices
 # Copyright 2013 Personal Telco Project
 
 include $(TOPDIR)/rules.mk
@@ -12,7 +12,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/dumb-ap
   SECTION:=ptp
   CATEGORY:=PTP
-  TITLE:=Node metapackage for dumb ap devices
+  TITLE:=Metapackage for Personal Telco dumb AP devices
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= \
