@@ -54,8 +54,7 @@ define Package/ptp-node
 	+ptp-utils \
 	+rsync \
 	+snmpd \
-	+tcpdump \
-	+uhttpd
+	+tcpdump
 endef
 
 define Package/ptp-node/config
