@@ -1,14 +1,30 @@
 #!/bin/sh /etc/rc.common
-# Copyright (C) 2009 OpenWrt.org
+# Copyright (C) 2006 OpenWrt.org
 
 START=90
 GATEWAY=/usr/nocatauth/bin/gateway
 CONF=/etc/nocat.conf
 
 start() {
-	$GATEWAY -f $CONF
+	while [ ! -r /etc/resolv.conf ] || ! grep -q nameserver /etc/resolv.conf ; do logger -t gateway "$(date) no nameserver yet" ; sleep 1 ; done
+	$GATEWAY -F -f $CONF 2>&1 | logger -t gateway &
 }
 
 stop() {
 	killall gateway
+	iptables -v -D FORWARD -j NoCat
+	iptables -v -t nat -D PREROUTING -j NoCat_Capture
+	iptables -v -t mangle -D PREROUTING -j NoCat
+	iptables -v -t mangle -F NoCat
+	iptables -v -t mangle -X NoCat
+	iptables -v -t nat -F NoCat_Capture
+	iptables -v -t nat -X NoCat_Capture
+	iptables -v -t nat -F NoCat_NAT
+	iptables -v -t nat -X NoCat_NAT
+	iptables -v -F NoCat
+	iptables -v -X NoCat
+	iptables -v -F NoCat_Inbound
+	iptables -v -X NoCat_Inbound
+	iptables -v -F NoCat_Ports
+	iptables -v -X NoCat_Ports
 }
