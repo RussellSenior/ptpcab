@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ptp-nocatauth
 PKG_VERSION:=nightly
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 
 PKG_SOURCE:=NoCatAuth-$(PKG_VERSION).tgz
 PKG_SOURCE_URL:=http://nocat.net/downloads/NoCatAuth/
