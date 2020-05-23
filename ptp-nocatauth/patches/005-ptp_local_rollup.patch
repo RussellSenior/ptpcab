@@ -44,7 +44,7 @@
  #  iptables -t filter -A FORWARD -s $net -j ACCEPT
  #done      
  
-+AllowedNetworks="199.223.125.93/32"
++ # AllowedNetworks="199.223.125.93/32" # obsolete?
 +
 +for net in $AllowedNetworks; do
 +  iptables -t mangle -A PREROUTING -d $net -j MARK --set-mark 2

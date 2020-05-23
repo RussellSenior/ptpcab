@@ -20,12 +20,3 @@ diff -ru NoCatAuth-nightly/libexec/iptables/initialize.fw NoCatAuth-patched/libe
  fi
  
  # Flush all user-defined chains
-@@ -241,6 +229,8 @@
- # Add any other local firewall rules below.
- ##
- 
-+iptables -t nat -I POSTROUTING -o $ExternalDevice -j MASQUERADE
-+
- ##
- # Uncomment the following to permit all 10/8 traffic *before* auth
- ##
