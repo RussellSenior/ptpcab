@@ -1,0 +1,19 @@
+CONFIG_TARGET_realtek=y
+CONFIG_TARGET_realtek_generic=y
+CONFIG_TARGET_realtek_generic_DEVICE_netgear_gs108t-v3=y
+CONFIG_DEVEL=y
+CONFIG_BUILD_LOG=y
+# CONFIG_BUSYBOX_CONFIG_BRCTL is not set
+# CONFIG_BUSYBOX_CONFIG_FREE is not set
+# CONFIG_BUSYBOX_CONFIG_PGREP is not set
+# CONFIG_BUSYBOX_CONFIG_TOP is not set
+# CONFIG_BUSYBOX_CONFIG_UPTIME is not set
+# CONFIG_PACKAGE_6relayd is not set
+# CONFIG_PACKAGE_firewall is not set
+# CONFIG_PACKAGE_firewall4 is not set
+# CONFIG_PACKAGE_odhcp6c is not set
+# CONFIG_PACKAGE_ppp is not set
+# CONFIG_PACKAGE_ppp-mod-pppoe is not set
+CONFIG_PACKAGE_ptp-nocatauth=y
+CONFIG_PACKAGE_ptp-node=y
+
