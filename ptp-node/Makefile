@@ -23,7 +23,6 @@ define Package/ptp-node
 	+dropbear \
 	+iftop \
 	+ip-tiny \
-	+ip6tables \
 	+iptables-mod-filter \
 	+iptables-mod-condition \
 	+iptables-mod-conntrack-extra \
@@ -79,11 +78,10 @@ define Package/ptp-node-with-ath5k
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= +ptp-node \
-	+horst \
 	+iw \
 	+iwinfo \
 	+kmod-ath5k \
-	+wpad-basic
+	+wpad-basic-mbedtls
 endef
 
 define Package/ptp-node-with-ath5k/description
@@ -97,11 +95,10 @@ define Package/ptp-node-with-ath9k
   URL:=https://personaltelco.net/wiki/OpenWrt
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= +ptp-node \
-	+horst \
 	+iw \
 	+iwinfo \
 	+kmod-ath9k \
-	+wpad-basic
+	+wpad-basic-mbedtls
 endef
 
 define Package/ptp-node-with-ath9k/description

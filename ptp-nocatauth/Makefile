@@ -23,7 +23,7 @@ define Package/ptp-nocatauth
   SUBMENU:=Captive Portals
   SECTION:=ptp
   CATEGORY:=PTP
-  DEPENDS:=+perl +perlbase-essential +perlbase-posix +perlbase-autoloader +perlbase-xsloader +perlbase-fcntl +perlbase-tie +perlbase-getopt +perlbase-findbin +perlbase-cwd +perlbase-config +perlbase-file +perlbase-sigtrap +perlbase-io +perlbase-symbol +perlbase-selectsaver +perlbase-socket +perlbase-errno +kmod-ipt-ipopt +kmod-ipt-nat-extra +iptables-mod-ipopt +iptables-mod-nat-extra +uhttpd
+  DEPENDS:=+perl +perlbase-essential +perlbase-posix +perlbase-autoloader +perlbase-xsloader +perlbase-fcntl +perlbase-tie +perlbase-getopt +perlbase-findbin +perlbase-cwd +perlbase-config +perlbase-file +perlbase-sigtrap +perlbase-io +perlbase-symbol +perlbase-selectsaver +perlbase-socket +perlbase-errno +iptables-zz-legacy +iptables-mod-condition +iptables-mod-conntrack-extra +iptables-mod-extra +iptables-mod-filter +iptables-mod-ipopt +iptables-mod-nat-extra +uhttpd
   TITLE:=Open public network perl-based gateway daemon
   URL:=http://nocat.net
 endef
