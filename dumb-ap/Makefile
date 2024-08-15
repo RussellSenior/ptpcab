@@ -46,7 +46,7 @@ define Package/dumb-ap
 	+rsync \
 	+snmpd \
 	+tcpdump \
-	+wpad-basic
+	+wpad-basic-mbedtls
 endef
 
 define Package/dumb-ap/config
