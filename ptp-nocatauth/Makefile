@@ -8,14 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ptp-nocatauth
-PKG_VERSION:=nightly
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 
-PKG_SOURCE:=NoCatAuth-$(PKG_VERSION).tgz
-PKG_SOURCE_URL:=http://nocat.net/downloads/NoCatAuth/
-PKG_MD5SUM:=b3a5f8d62b322a9409806037ab8d374e
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/NoCatAuth-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/personaltelco/nocatauth.git
+PKG_SOURCE_DATE:=2004-05-23
+PKG_SOURCE_VERSION:=b4b954f4fbd1baf9ffe19820ccd92c9b3b385aa8
+PKG_MAINTAINER:=Russell Senior <russell@personaltelco.net>
 
 include $(INCLUDE_DIR)/package.mk
 
