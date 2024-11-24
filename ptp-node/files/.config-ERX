@@ -9,7 +9,6 @@ CONFIG_BUILD_LOG=y
 # CONFIG_BUSYBOX_CONFIG_TOP is not set
 # CONFIG_BUSYBOX_CONFIG_UPTIME is not set
 # CONFIG_IPTABLES_NFTABLES is not set
-# CONFIG_KERNEL_KALLSYMS is not set
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_firewall4 is not set
 CONFIG_PACKAGE_ip-bridge=y
