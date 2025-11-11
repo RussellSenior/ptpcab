@@ -79,7 +79,6 @@ define Package/ptp-node-with-ath5k
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= +ptp-node \
 	+iw \
-	+iwinfo \
 	+kmod-ath5k \
 	+wpad-basic-mbedtls
 endef
@@ -96,7 +95,6 @@ define Package/ptp-node-with-ath9k
   MAINTAINER:=Russell Senior <russell@personaltelco.net>
   DEPENDS:= +ptp-node \
 	+iw \
-	+iwinfo \
 	+kmod-ath9k \
 	+wpad-basic-mbedtls
 endef
