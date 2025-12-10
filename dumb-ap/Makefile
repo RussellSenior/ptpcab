@@ -24,7 +24,6 @@ define Package/dumb-ap
 	+iftop \
 	+ip \
 	+iw \
-	+iwinfo \
 	+kmod-batman-adv \
 	+procps-ng \
 	+procps-ng-free \
